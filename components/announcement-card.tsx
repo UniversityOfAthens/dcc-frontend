@@ -23,8 +23,8 @@ export default function AnnouncementCard({ announcement }: { announcement: Annou
             />
           </div>
         )}
-        <div className="flex flex-col items-center justify-center h-auto">
-          <p className="text-center">{announcement.description}</p>
+        <div className="flex flex-col items-center justify-center h-auto w-full min-w-0">
+          <p className="text-center whitespace-pre-wrap break-words max-w-full">{announcement.description}</p>
         </div>
       </CardContent>
     </Card>

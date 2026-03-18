@@ -30,22 +30,22 @@ export const series: Serie[] = [
       },
       {
         name: 'Lecture 2',
-        link1: 'https://delos.uoa.gr/opendelos/videolecture/show?rid=7114e911',
-        link2: 'https://delos.uoa.gr/opendelos/videolecture/show?rid=e8bf73e1',
+        link1: 'https://uniflix.uoa.gr/events/player?id=69a3f59b0bc047d606578343',
+        link2: 'https://uniflix.uoa.gr/events/player?id=69a3f7460bc047d60657e4a4',
         notes:
           'https://drive.google.com/file/d/1muI9R6u83VnuHRxpBrjscj745gOG1krW/view?usp=drive_link',
       },
       {
         name: 'Lecture 3',
-        link1: 'https://delos.uoa.gr/opendelos/videolecture/show?rid=90b4e9c1',
-        link2: 'https://delos.uoa.gr/opendelos/videolecture/show?rid=cca04907',
+        link1: 'https://uniflix.uoa.gr/events/player?id=69a3f60e0bc047d606579d63',
+        link2: 'https://uniflix.uoa.gr/events/player?id=69a3f6e20bc047d60657cde4',
         notes:
           'https://drive.google.com/file/d/19LFJdGheGmLHt1WEDDa6zTJ8__v1gsA3/view?usp=drive_link',
       },
       {
         name: 'Lecture 4',
-        link1: 'https://delos.uoa.gr/opendelos/videolecture/show?rid=6978d559',
-        link2: 'https://delos.uoa.gr/opendelos/videolecture/show?rid=e9319026',
+        link1: 'https://uniflix.uoa.gr/events/player?id=69a3f5810bc047d606577d4e',
+        link2: 'https://uniflix.uoa.gr/events/player?id=69a3f7480bc047d60657e512',
         notes:
           'https://drive.google.com/file/d/1qTPLKxu3f8Og6vDTUP0DvhkooQXDZa2X/view?usp=drive_link',
       },

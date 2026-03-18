@@ -54,7 +54,7 @@ export default function Header() {
   const showDrawer = width <= 700;
 
   return (
-    <nav className="bg-primary h-24 p-5 flex flex-row justify-between items-center">
+    <nav className="bg-primary h-24 p-5 flex flex-row justify-between items-center relative z-50">
       <Link href={'/'}>
         <Image src={'/logo.png'} alt="logo" width={75} height={75} />
       </Link>

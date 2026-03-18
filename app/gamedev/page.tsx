@@ -1,8 +1,6 @@
 import AnnouncementCard from '@/components/announcement-card';
-import MeetingCard from '@/components/meeting-card';
 import { Button } from '@/components/ui/button';
 import { getAnnouncements } from '@/server/getAnnouncements';
-import { getMeetings } from '@/server/getMeetings';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,16 +14,6 @@ export default async function GameDev({
   const { data: announcementData, totalPages: totalAnnouncementsPages } = await getAnnouncements({
     pagination: {
       page: searchParamsValue?.aPage ? parseInt(searchParamsValue.aPage) : 1,
-      pageSize: 20,
-    },
-    filters: {
-      section: ['gamedev'],
-    },
-  });
-
-  const { data: meetingsData, totalPages: totalMeetingsPages } = await getMeetings({
-    pagination: {
-      page: searchParamsValue?.mPage ? parseInt(searchParamsValue.mPage) : 1,
       pageSize: 20,
     },
     filters: {
@@ -54,26 +42,6 @@ export default async function GameDev({
             <Button key={i} asChild variant={'outline'} className="mx-1">
               <Link
                 href={`/gamedev?aPage=${i + 1}&mPage=${searchParamsValue?.mPage ? parseInt(searchParamsValue.mPage) : 1}`}
-              >
-                {i + 1}
-              </Link>
-            </Button>
-          ))}
-        </div>
-        <h2 className="text-center text-2xl">Συναντήσεις</h2>
-        {meetingsData.length === 0 && <h1 className="text-xl">Δεν υπάρχουν ακόμα συναντήσεις</h1>}
-        {meetingsData && (
-          <>
-            {meetingsData.map((meeting) => {
-              return <MeetingCard key={meeting.id} meeting={meeting} />;
-            })}
-          </>
-        )}
-        <div className="flex flex-row justify-center mb-3">
-          {Array.from({ length: totalMeetingsPages }).map((_, i) => (
-            <Button key={i} asChild variant={'outline'} className="mx-1">
-              <Link
-                href={`/gamedev?aPage=${searchParamsValue?.aPage ? parseInt(searchParamsValue.aPage) : 1}&mPage=${i + 1}`}
               >
                 {i + 1}
               </Link>
