@@ -24,6 +24,8 @@ Next.js frontend for the DIT Coding Club. Uses Firebase (Firestore) for announce
    - `FIREBASE_CLIENT_ID`
    - `ADMIN_EMAIL` (optional)
 
+To access the credentials, check the pinned messages in the #website channel within the Dit Coding Club server.
+
 3. Run dev server:
 
    ```bash
