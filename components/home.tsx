@@ -190,10 +190,9 @@ export default function Home({
           <AccordionItem value="item-5">
             <AccordionTrigger className="text-xl">Πώς πάω στη σχολή;</AccordionTrigger>
             <AccordionContent className="text-lg">
-              Από τον σταθμό του μετρό Ευαγγελισμός
-              παίρνεις: Είτε το λεωφορείο 250 και κατεβαίνεις 2η Πανεπιστημιούπολη. Είτε το
-              λεωφορείο 224 και κατεβαίνεις 10η Καισαριανής. Αν δε σε εξυπηρετούν μπορείς να δεις
-              και τους{' '}
+              Από τον σταθμό του μετρό Ευαγγελισμός παίρνεις: Είτε το λεωφορείο 250 και κατεβαίνεις
+              2η Πανεπιστημιούπολη. Είτε το λεωφορείο 224 και κατεβαίνεις 10η Καισαριανής. Αν δε σε
+              εξυπηρετούν μπορείς να δεις και τους{' '}
               <Link
                 className="underline"
                 href={'https://www.di.uoa.gr/department/contact-location'}

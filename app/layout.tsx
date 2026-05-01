@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="el">
+    <html lang="el" suppressHydrationWarning>
       <body className="antialiased">
         <NextTopLoader color="#43C5E7" height={3} showSpinner={false} />
         <Header />
