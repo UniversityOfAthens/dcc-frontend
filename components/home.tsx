@@ -143,12 +143,7 @@ export default function Home({
           pageUrl="/art3d"
         />
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        className="w-2/3 p mt-20 flex flex-col items-center gap-5 justify-center lg:w-2/3"
-      >
+      <div className="w-2/3 p mt-20 flex flex-col items-center gap-5 justify-center lg:w-2/3">
         <h2 className="text-5xl">FAQ</h2>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
@@ -217,7 +212,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </motion.div>
+      </div>
     </div>
   );
 }
