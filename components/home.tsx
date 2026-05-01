@@ -147,7 +147,7 @@ export default function Home({
         <h2 className="text-5xl">FAQ</h2>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger className="text-xl cursor-pointer">
+            <AccordionTrigger className="text-xl">
               Πως γίνομαι μελος μιας ομάδας?
             </AccordionTrigger>
             <AccordionContent className="text-lg">
@@ -155,7 +155,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger className="text-xl cursor-pointer">
+            <AccordionTrigger className="text-xl">
               Δεν είμαι φοιτητής της σχολής, μπορώ να έρχομαι στις συναντήσεις?
             </AccordionTrigger>
             <AccordionContent className="text-lg">
@@ -163,7 +163,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger className="text-xl cursor-pointer">
+            <AccordionTrigger className="text-xl">
               Στον σέρβερ μπαίνει όποιο άτομο θέλει?
             </AccordionTrigger>
             <AccordionContent className="text-lg">
@@ -173,7 +173,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
-            <AccordionTrigger className="text-xl cursor-pointer">
+            <AccordionTrigger className="text-xl">
               Που βρίσκεται η σχολή?
             </AccordionTrigger>
             <AccordionContent className="text-lg">
@@ -187,9 +187,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5">
-            <AccordionTrigger className="text-xl cursor-pointer">
-              Πώς πάω στη σχολή;
-            </AccordionTrigger>
+            <AccordionTrigger className="text-xl">Πώς πάω στη σχολή;</AccordionTrigger>
             <AccordionContent className="text-lg">
               Από τον σταθμό του μετρό Ευαγγελισμός παίρνεις: Είτε το λεωφορείο 250 και κατεβαίνεις
               2η Πανεπιστημιούπολη. Είτε το λεωφορείο 224 και κατεβαίνεις 10η Καισαριανής. Αν δε σε
@@ -204,7 +202,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-6">
-            <AccordionTrigger className="text-xl cursor-pointer">
+            <AccordionTrigger className="text-xl">
               Που βρίσκεται η αίθουσα ΧΧΧ?
             </AccordionTrigger>
             <AccordionContent className="flex flex-row items-center justify-center">
@@ -212,7 +210,7 @@ export default function Home({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-7">
-            <AccordionTrigger className="text-xl cursor-pointer">
+            <AccordionTrigger className="text-xl">
               Είναι απαραίτητο να πηγαίνω σε κάθε συνάντηση?
             </AccordionTrigger>
             <AccordionContent className="text-lg">
