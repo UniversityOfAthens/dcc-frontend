@@ -25,12 +25,12 @@ export default async function Serie({ params }: { params: Promise<{ serieId: str
                 {el.link1.trim().length === 0 && <p>Δεν υπήρξε καταγραφή</p>}
                 {el.link1.trim().length !== 0 && (
                   <div className="w-full flex flex-col gap-3">
-                    <Button asChild size= {'tall'} variant={'outline'} className="w-full">
+                    <Button asChild size={'tall'} variant={'outline'} className="w-full">
                       <Link href={el.link1} target="_blank">
                         ΜΕΡΟΣ 1
                       </Link>
                     </Button>
-                    <Button asChild size= {'tall'} variant={'outline'} className="w-full">
+                    <Button asChild size={'tall'} variant={'outline'} className="w-full">
                       <Link href={el.link2} target="_blank">
                         ΜΕΡΟΣ 2
                       </Link>
@@ -38,7 +38,7 @@ export default async function Serie({ params }: { params: Promise<{ serieId: str
                   </div>
                 )}
                 {el.notes.trim().length !== 0 && (
-                  <Button asChild size= {'tall'} variant={'outline'} className="w-full">
+                  <Button asChild size={'tall'} variant={'outline'} className="w-full">
                     <Link href={el.notes} target="_blank">
                       ΣΗΜΕΙΩΣΕΙΣ
                     </Link>
