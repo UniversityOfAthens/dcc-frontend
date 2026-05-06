@@ -17,6 +17,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Badge } from './ui/badge';
 import Section from './section';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
+import DOMPurify from 'dompurify';
 
 const sectionLabelMap = {
   general: 'General',
@@ -69,6 +70,11 @@ export default function Home({
         <Carousel className="w-3/4 sm:w-1/2">
           <CarouselContent>
             {featuredAnnouncements.map((announcement, index) => {
+              const sanitizedHTML =
+                typeof window !== 'undefined'
+                  ? DOMPurify.sanitize(announcement.description)
+                  : announcement.description;
+
               return (
                 <CarouselItem key={index}>
                   <Card className="min-h-200 min-w-1/2">
@@ -92,8 +98,12 @@ export default function Home({
                           />
                         </div>
                       )}
-                      <div className="flex flex-col items-center justify-center">
-                        <p className="text-center">{announcement.description}</p>
+                      <div className="flex flex-col items-center justify-center w-full">
+                        {/* Render HTML content for Carousel Items */}
+                        <div
+                          className="prose dark:prose-invert max-w-none text-center w-full"
+                          dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+                        />
                       </div>
                     </CardContent>
                   </Card>

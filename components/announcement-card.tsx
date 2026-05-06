@@ -1,12 +1,19 @@
 import { Announcement } from '@/types/announcement';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
+import DOMPurify from 'dompurify';
 
 export default function AnnouncementCard({ announcement }: { announcement: Announcement }) {
+  // Sanitize HTML for safe rendering
+  const sanitizedDescriptionHTML =
+    typeof window !== 'undefined'
+      ? DOMPurify.sanitize(announcement.description)
+      : announcement.description;
+
   return (
     <Card className="w-full h-auto flex flex-col">
       <CardHeader>
-        <CardTitle className="flex  flex-row gap-2 justify-between">
+        <CardTitle className="flex flex-row gap-2 justify-between">
           <div className="flex flex-row gap-2 items-center">{announcement.title}</div>
         </CardTitle>
         <CardDescription>{announcement.updated}</CardDescription>
@@ -24,9 +31,11 @@ export default function AnnouncementCard({ announcement }: { announcement: Annou
           </div>
         )}
         <div className="flex flex-col items-center justify-center h-auto w-full min-w-0">
-          <p className="text-center whitespace-pre-wrap break-words max-w-full">
-            {announcement.description}
-          </p>
+          {/* Render the HTML with prose styling */}
+          <div
+            className="prose dark:prose-invert max-w-none text-center w-full break-words"
+            dangerouslySetInnerHTML={{ __html: sanitizedDescriptionHTML }}
+          />
         </div>
       </CardContent>
     </Card>
