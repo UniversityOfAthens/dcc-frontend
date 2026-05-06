@@ -54,7 +54,7 @@ export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
     })
     .map((item) => ({
       ...item,
-      created: item.created?.toDate?.().toLocaleString() || null,
+      created: item.created?.toDate?.().toLocaleDateString() || null,
       updated: item.updated?.toDate?.().toLocaleDateString() || null,
     })) as Announcement[];
 
