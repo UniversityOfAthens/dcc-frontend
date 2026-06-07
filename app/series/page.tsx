@@ -1,15 +1,24 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { series } from './series';
+import { getSeries } from '@/server/getSeries';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function Series() {
+export default async function Series() {
+  const { data } = await getSeries({
+    pagination: {
+      pageSize: 50,
+    },
+  });
+
   return (
     <div className="w-full min-h-screen flex flex-col gap-4 mt-6 items-center my-5">
       <div className="lg:w-2/5 w-full flex flex-col justify-center items-center gap-6">
         <h1 className="text-3xl text-center">Σειρές</h1>
-        {series.map((el, index) => (
-          <Card key={index} className="w-full">
+        {data.length === 0 && (
+          <p className="text-center text-muted-foreground">Δεν υπάρχουν σειρές ακόμα.</p>
+        )}
+        {data.map((el) => (
+          <Card key={el.id} className="w-full">
             <CardHeader>
               <h2 className="text-2xl">
                 {el.name} by {el.speaker}
