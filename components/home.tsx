@@ -67,53 +67,95 @@ export default function Home({
         className="flex flex-col items-center w-full mt-15 gap-7"
       >
         <h2 className="text-5xl">Ανακοινώσεις</h2>
-        <Carousel className="w-3/4 sm:w-1/2">
-          <CarouselContent>
-            {featuredAnnouncements.map((announcement, index) => {
+        {featuredAnnouncements.length > 1 ? (
+          <Carousel className="w-3/4 sm:w-1/2">
+            <CarouselContent>
+              {featuredAnnouncements.map((announcement, index) => {
+                const sanitizedHTML =
+                  typeof window !== 'undefined'
+                    ? DOMPurify.sanitize(announcement.description)
+                    : announcement.description;
+
+                return (
+                  <CarouselItem key={index}>
+                    <Card className="min-h-200 min-w-1/2">
+                      <CardHeader>
+                        <CardTitle className="flex flex-row items-center gap-3 ">
+                          {announcement.title}
+                          <Badge variant={announcement.section}>
+                            {sectionLabelMap[announcement.section]}
+                          </Badge>
+                        </CardTitle>
+                        <CardDescription>{announcement.created}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex flex-col justify-center items-center gap-5">
+                        {announcement.image && (
+                          <div className="relative w-[400px] h-[400px]">
+                            <Image
+                              src={announcement.image}
+                              alt="Description"
+                              fill
+                              style={{ objectFit: 'contain' }}
+                            />
+                          </div>
+                        )}
+                        <div className="flex flex-col items-center justify-center w-full">
+                          <div
+                            className="prose dark:prose-invert max-w-none text-center w-full"
+                            dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        ) : featuredAnnouncements.length === 1 ? (
+          <div className="w-3/4 sm:w-1/2">
+            {(() => {
+              const announcement = featuredAnnouncements[0];
               const sanitizedHTML =
                 typeof window !== 'undefined'
                   ? DOMPurify.sanitize(announcement.description)
                   : announcement.description;
-
               return (
-                <CarouselItem key={index}>
-                  <Card className="min-h-200 min-w-1/2">
-                    <CardHeader>
-                      <CardTitle className="flex flex-row items-center gap-3 ">
-                        {announcement.title}
-                        <Badge variant={announcement.section}>
-                          {sectionLabelMap[announcement.section]}
-                        </Badge>
-                      </CardTitle>
-                      <CardDescription>{announcement.created}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex flex-col justify-center items-center gap-5">
-                      {announcement.image && (
-                        <div className="relative w-[400px] h-[400px]">
-                          <Image
-                            src={announcement.image}
-                            alt="Description"
-                            fill
-                            style={{ objectFit: 'contain' }}
-                          />
-                        </div>
-                      )}
-                      <div className="flex flex-col items-center justify-center w-full">
-                        {/* Render HTML content for Carousel Items */}
-                        <div
-                          className="prose dark:prose-invert max-w-none text-center w-full"
-                          dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+                <Card className="min-h-200">
+                  <CardHeader>
+                    <CardTitle className="flex flex-row items-center gap-3 ">
+                      {announcement.title}
+                      <Badge variant={announcement.section}>
+                        {sectionLabelMap[announcement.section]}
+                      </Badge>
+                    </CardTitle>
+                    <CardDescription>{announcement.created}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex flex-col justify-center items-center gap-5">
+                    {announcement.image && (
+                      <div className="relative w-[400px] h-[400px]">
+                        <Image
+                          src={announcement.image}
+                          alt="Description"
+                          fill
+                          style={{ objectFit: 'contain' }}
                         />
                       </div>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
+                    )}
+                    <div className="flex flex-col items-center justify-center w-full">
+                      <div
+                        className="prose dark:prose-invert max-w-none text-center w-full"
+                        dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
               );
-            })}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+            })()}
+          </div>
+        ) : null}
       </motion.div>
       <motion.div className="w-full flex flex-col items-center justify-center gap-25">
         <h2 className="mt-55 text-6xl">Τα πεδία</h2>

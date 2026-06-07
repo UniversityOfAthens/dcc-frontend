@@ -28,8 +28,8 @@ export const getTalks = async (options?: GetTalksOptions) => {
       ({
         id: doc.id,
         ...doc.data(),
-        created: doc.data().updated?.toDate().toLocaleString() || null,
-        updated: doc.data().updated?.toDate().toLocaleString() || null,
+        created: doc.data().updated?.toDate().toLocaleString('el-GR') || null,
+        updated: doc.data().updated?.toDate().toLocaleString('el-GR') || null,
         image: doc.data().image || null,
       }) as Talk,
   );
