@@ -1,15 +1,15 @@
 import AnnouncementCard from '@/components/announcement-card';
-import { Button } from '@/components/ui/button';
+import PagePagination from '@/components/page-pagination';
 import { getAnnouncements } from '@/server/getAnnouncements';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default async function Cp({ searchParams }: { searchParams: Promise<{ page: string }> }) {
   const searchParamsValue = await searchParams;
+  const currentPage = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
 
   const { data, totalPages } = await getAnnouncements({
     pagination: {
-      page: searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1,
+      page: currentPage,
       pageSize: 20,
     },
     filters: {
@@ -18,7 +18,7 @@ export default async function Cp({ searchParams }: { searchParams: Promise<{ pag
   });
 
   return (
-    <div className="flex flex-col items-center mt-15 gap-5 min-h-screen">
+    <div className="flex flex-col items-center mt-15 mb-5 gap-5 min-h-screen">
       <div className="lg:w-2/5 w-full flex flex-col justify-center items-center gap-6">
         <Image src={'/se-logo.png'} alt="game dev logo" width={200} height={200} />
         <h1 className="text-center text-4xl">Security</h1>
@@ -30,13 +30,10 @@ export default async function Cp({ searchParams }: { searchParams: Promise<{ pag
             })}
           </>
         )}
-        <div className="flex flex-row justify-center mb-3">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <Button key={i} asChild variant={'outline'} className="mx-1">
-              <Link href={`/security?page=${i + 1}`}>{i + 1}</Link>
-            </Button>
-          ))}
-        </div>
+        <PagePagination
+          currentPage={currentPage}
+          hrefs={Array.from({ length: totalPages }).map((_, i) => `/security?page=${i + 1}`)}
+        />
       </div>
     </div>
   );

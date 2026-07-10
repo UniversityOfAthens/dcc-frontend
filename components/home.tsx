@@ -195,9 +195,13 @@ export default function Home({
           pageUrl="/art3d"
         />
       </motion.div>
-      <div className="w-2/3 p mt-20 flex flex-col items-center gap-5 justify-center lg:w-2/3">
+      <div className="mt-20 flex w-[calc(100%-1.5rem)] flex-col items-center justify-center gap-5 sm:w-11/12 lg:w-2/3">
         <h2 className="text-5xl">FAQ</h2>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full [&_[data-slot=accordion-content]]:text-foreground/70 [&_[data-slot=accordion-trigger]]:font-bold [&_[data-slot=accordion-trigger]]:text-foreground"
+        >
           <AccordionItem value="item-1">
             <AccordionTrigger className="text-xl">Πως γίνομαι μελος μιας ομάδας?</AccordionTrigger>
             <AccordionContent className="text-lg">

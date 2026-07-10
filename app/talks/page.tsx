@@ -1,14 +1,14 @@
 import TalkCard from '@/components/talk-card';
-import { Button } from '@/components/ui/button';
+import PagePagination from '@/components/page-pagination';
 import { getTalks } from '@/server/getTalks';
-import Link from 'next/link';
 
 export default async function Talks({ searchParams }: { searchParams: Promise<{ page: string }> }) {
   const searchParamsValue = await searchParams;
+  const currentPage = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
 
   const { data, totalPages } = await getTalks({
     pagination: {
-      page: searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1,
+      page: currentPage,
       pageSize: 20,
     },
   });
@@ -25,13 +25,10 @@ export default async function Talks({ searchParams }: { searchParams: Promise<{ 
             })}
           </>
         )}
-        <div className="flex flex-row justify-center">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <Button key={i} asChild variant={'outline'} className="mx-1">
-              <Link href={`/talks?page=${i + 1}`}>{i + 1}</Link>
-            </Button>
-          ))}
-        </div>
+        <PagePagination
+          currentPage={currentPage}
+          hrefs={Array.from({ length: totalPages }).map((_, i) => `/talks?page=${i + 1}`)}
+        />
       </div>
     </div>
   );

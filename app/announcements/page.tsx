@@ -1,7 +1,6 @@
 import AnnouncementCard from '@/components/announcement-card';
-import { Button } from '@/components/ui/button';
+import PagePagination from '@/components/page-pagination';
 import { getAnnouncements } from '@/server/getAnnouncements';
-import Link from 'next/link';
 
 export default async function Announcements({
   searchParams,
@@ -9,10 +8,11 @@ export default async function Announcements({
   searchParams: Promise<{ page: string }>;
 }) {
   const searchParamsValue = await searchParams;
+  const currentPage = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
 
   const { data, totalPages } = await getAnnouncements({
     pagination: {
-      page: searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1,
+      page: currentPage,
       pageSize: 20,
     },
     filters: {
@@ -32,13 +32,10 @@ export default async function Announcements({
             })}
           </>
         )}
-        <div className="flex flex-row justify-center">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <Button key={i} asChild variant={'outline'} className="mx-1">
-              <Link href={`/announcements?page=${i + 1}`}>{i + 1}</Link>
-            </Button>
-          ))}
-        </div>
+        <PagePagination
+          currentPage={currentPage}
+          hrefs={Array.from({ length: totalPages }).map((_, i) => `/announcements?page=${i + 1}`)}
+        />
       </div>
     </div>
   );
