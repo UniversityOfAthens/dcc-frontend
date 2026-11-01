@@ -44,6 +44,7 @@ export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
       return {
         id: doc.id,
         ...data,
+        description: sanitizeDescription(data.description),
         created: data.created || null,
         updated: data.updated || null,
       };
@@ -55,7 +56,6 @@ export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
     })
     .map((item) => ({
       ...item,
-      description: sanitizeDescription(item.description as string | undefined),
       created: item.created?.toDate?.().toLocaleDateString('el-GR') || null,
       updated: item.updated?.toDate?.().toLocaleDateString('el-GR') || null,
     })) as Announcement[];
