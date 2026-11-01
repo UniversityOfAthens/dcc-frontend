@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,6 +17,8 @@ import { Button } from './ui/button';
 import { AlignJustify, ChevronDown } from 'lucide-react';
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 
+const DISCORD_INVITE = 'https://discord.com/invite/c34X34X6Jb';
+
 const links = [
   { label: 'Ανακοινώσεις', href: '/announcements', subSections: [] },
   { label: 'Πρόγραμμα', href: '/schedule', subSections: [] },
@@ -24,6 +28,7 @@ const links = [
     subSections: [
       { label: 'Ομιλίες', href: '/talks' },
       { label: 'Σειρές', href: '/series' },
+      { label: 'Κάνε μια ομιλία', href: '/talks/propose' },
     ],
   },
   {
@@ -52,11 +57,28 @@ export default function Header() {
   }, []);
 
   const showDrawer = width <= 700;
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <nav className="bg-primary h-24 p-5 flex flex-row justify-between items-center relative z-50">
-      <Link href={'/'}>
-        <Image src={'/logo.png'} alt="logo" width={75} height={75} />
+    <nav
+      className={cn(
+        'sticky top-0 z-50 flex h-18 flex-row items-center justify-between px-5 transition-[background-color,box-shadow,backdrop-filter] duration-300',
+        isHome && !scrolled
+          ? 'bg-transparent'
+          : 'bg-primary/90 shadow-[0_1px_0_rgba(255,255,255,0.06),0_10px_30px_-18px_rgba(0,0,0,0.8)] backdrop-blur-md',
+      )}
+    >
+      <Link href={'/'} aria-label="Αρχική">
+        <Image src={'/logo.png'} alt="DIT Coding Club" width={54} height={54} data-logo-slot />
       </Link>
       {showDrawer ? (
         <div>
@@ -113,12 +135,24 @@ export default function Header() {
                     );
                   }
                 })}
+                <Button variant="secondary" asChild className="mt-4 h-11 rounded-lg font-bold">
+                  <Link href={DISCORD_INVITE} target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src="/discord.png"
+                      alt=""
+                      width={20}
+                      height={20}
+                      className="brightness-0 opacity-85"
+                    />
+                    Μπες στο Discord
+                  </Link>
+                </Button>
               </div>
             </SheetContent>
           </Sheet>
         </div>
       ) : (
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row items-center gap-4">
           <NavigationMenu viewport={false}>
             <NavigationMenuList>
               {links.map((el, index) => {
@@ -147,6 +181,18 @@ export default function Header() {
               })}
             </NavigationMenuList>
           </NavigationMenu>
+          <Button variant="secondary" size="sm" asChild className="rounded-lg font-bold">
+            <Link href={DISCORD_INVITE} target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/discord.png"
+                alt=""
+                width={18}
+                height={18}
+                className="brightness-0 opacity-85"
+              />
+              Discord
+            </Link>
+          </Button>
         </div>
       )}
     </nav>

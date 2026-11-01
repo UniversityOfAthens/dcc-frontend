@@ -1,5 +1,6 @@
 import AnnouncementCard from '@/components/announcement-card';
 import PagePagination from '@/components/page-pagination';
+import { EmptyState, PageContainer, PageHeader } from '@/components/page-container';
 import { getAnnouncements } from '@/server/getAnnouncements';
 
 export default async function Announcements({
@@ -21,22 +22,16 @@ export default async function Announcements({
   });
 
   return (
-    <div className="flex flex-col w-full min-h-screen gap-4 my-5 items-center justify-center">
-      <div className="lg:w-2/5 w-full flex flex-col justify-center items-center gap-6">
-        <h1 className="text-3xl text-center">Ανακοινώσεις</h1>
-        {data.length === 0 && <h1 className="text-xl">There are no announcements :(</h1>}
-        {data && (
-          <>
-            {data.map((announcement) => {
-              return <AnnouncementCard key={announcement.id} announcement={announcement} />;
-            })}
-          </>
-        )}
-        <PagePagination
-          currentPage={currentPage}
-          hrefs={Array.from({ length: totalPages }).map((_, i) => `/announcements?page=${i + 1}`)}
-        />
-      </div>
-    </div>
+    <PageContainer>
+      <PageHeader title="Ανακοινώσεις" description="Τα νέα του Coding Club." />
+      {data.length === 0 && <EmptyState>Δεν υπάρχουν ακόμα ανακοινώσεις.</EmptyState>}
+      {data.map((announcement) => (
+        <AnnouncementCard key={announcement.id} announcement={announcement} />
+      ))}
+      <PagePagination
+        currentPage={currentPage}
+        hrefs={Array.from({ length: totalPages }).map((_, i) => `/announcements?page=${i + 1}`)}
+      />
+    </PageContainer>
   );
 }

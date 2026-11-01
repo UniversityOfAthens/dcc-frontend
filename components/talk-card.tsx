@@ -1,59 +1,47 @@
 import { Talk } from '@/types/talk';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import Link from 'next/link';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
+import { LinkButton, LinkButtons } from './link-buttons';
 
 export default function TalkCard({ talk }: { talk: Talk }) {
   const sanitizedDescriptionHTML =
     typeof window !== 'undefined' ? DOMPurify.sanitize(talk.description) : talk.description;
 
+  const parts = [talk.url1, talk.url2, talk.url3].filter((url): url is string => !!url);
+
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="flex flex-row justify-between">
-          {talk.title} by {talk.speaker}
-        </CardTitle>
-        <CardDescription>{talk.created}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        {talk.image && (
-          <div className="relative w-full max-w-md self-center">
-            <Image
-              src={talk.image}
-              alt={`Image for ${talk.title}`}
-              layout="responsive"
-              width={500}
-              height={300}
-              className="rounded-md object-cover"
-            />
-          </div>
-        )}
-        <div
-          className="prose dark:prose-invert max-w-none"
-          dangerouslySetInnerHTML={{ __html: sanitizedDescriptionHTML }}
-        />
-        <Button asChild variant={'outline'} size={'xl'}>
-          <Link href={talk.url1} target="_blank">
-            Μέρος 1
-          </Link>
-        </Button>
-        {talk.url2 && talk.url2 !== '' && (
-          <Button asChild variant={'outline'} size={'xl'}>
-            <Link href={talk.url2} target="_blank">
-              Μέρος 2
-            </Link>
-          </Button>
-        )}
-        {talk.url3 && talk.url3 !== '' && (
-          <Button asChild variant={'outline'} size={'xl'}>
-            <Link href={talk.url3} target="_blank">
-              Μέρος 3
-            </Link>
-          </Button>
-        )}
-      </CardContent>
-    </Card>
+    <article className="flex w-full min-w-0 flex-col gap-3 rounded-2xl bg-card px-6 py-6 sm:px-7">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-foreground/60">
+        <span>{talk.speaker}</span>
+        {talk.created && <span>· {talk.created}</span>}
+      </div>
+      <h3 className="text-xl font-bold leading-snug">{talk.title}</h3>
+      {talk.image && (
+        <div className="w-full max-w-md self-center">
+          <Image
+            src={talk.image}
+            alt={`Image for ${talk.title}`}
+            width={500}
+            height={300}
+            sizes="(max-width: 448px) 100vw, 448px"
+            className="rounded-lg object-cover"
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </div>
+      )}
+      <div
+        className="prose dark:prose-invert max-w-none break-words text-[15px] leading-relaxed text-foreground/85 prose-a:text-secondary"
+        dangerouslySetInnerHTML={{ __html: sanitizedDescriptionHTML }}
+      />
+      {parts.length > 0 && (
+        <LinkButtons>
+          {parts.map((url, i) => (
+            <LinkButton key={url} href={url}>
+              Μέρος {i + 1}
+            </LinkButton>
+          ))}
+        </LinkButtons>
+      )}
+    </article>
   );
 }

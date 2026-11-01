@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { getSeries } from '@/server/getSeries';
-import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { EmptyState, PageContainer, PageHeader } from '@/components/page-container';
+import { getSeries } from '@/server/getSeries';
 
 export default async function Series() {
   const { data } = await getSeries({
@@ -11,28 +11,24 @@ export default async function Series() {
   });
 
   return (
-    <div className="w-full min-h-screen flex flex-col gap-4 mt-6 items-center my-5">
-      <div className="lg:w-2/5 w-full flex flex-col justify-center items-center gap-6">
-        <h1 className="text-3xl text-center">Σειρές</h1>
-        {data.length === 0 && (
-          <p className="text-center text-muted-foreground">Δεν υπάρχουν σειρές ακόμα.</p>
-        )}
-        {data.map((el) => (
-          <Card key={el.id} className="w-full">
-            <CardHeader>
-              <h2 className="text-2xl">
-                {el.name} by {el.speaker}
-              </h2>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-7">
-              {el.description}
-              <Button asChild className="w-full" variant={'outline'}>
-                <Link href={`/series/${el.id}`}>ΠΑΡΑΚΟΛΟΥΘΗΣΕ</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
+    <PageContainer>
+      <PageHeader title="Σειρές" description="Σειρές μαθημάτων με πολλά επεισόδια." />
+      {data.length === 0 && <EmptyState>Δεν υπάρχουν ακόμα σειρές.</EmptyState>}
+      {data.map((el) => (
+        <Link
+          key={el.id}
+          href={`/series/${el.id}`}
+          className="group flex flex-col gap-2 rounded-2xl border border-transparent bg-card px-6 py-6 transition-colors hover:border-secondary/40 sm:px-7"
+        >
+          <h2 className="text-xl font-bold leading-snug">{el.name}</h2>
+          <p className="text-sm text-foreground/60">{el.speaker}</p>
+          <p className="text-[15px] leading-relaxed text-foreground/85">{el.description}</p>
+          <span className="mt-1 inline-flex items-center gap-1 text-sm font-bold text-secondary group-hover:underline">
+            Παρακολούθησε
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </span>
+        </Link>
+      ))}
+    </PageContainer>
   );
 }
