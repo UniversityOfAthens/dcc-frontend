@@ -1,4 +1,5 @@
-'use server';
+import 'server-only';
+import { sanitizeDescription } from '@/lib/sanitize';
 
 import { firestore, getTotalPages } from '@/firebase/server';
 import { Announcement } from '@/types/announcement';
@@ -43,6 +44,7 @@ export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
       return {
         id: doc.id,
         ...data,
+        description: sanitizeDescription(data.description),
         created: data.created || null,
         updated: data.updated || null,
       };

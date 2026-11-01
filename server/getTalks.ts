@@ -1,4 +1,5 @@
-'use server';
+import 'server-only';
+import { sanitizeDescription } from '@/lib/sanitize';
 
 import { firestore, getTotalPages } from '@/firebase/server';
 import { Talk } from '@/types/talk';
@@ -31,6 +32,7 @@ export const getTalks = async (options?: GetTalksOptions) => {
         created: doc.data().updated?.toDate().toLocaleString('el-GR') || null,
         updated: doc.data().updated?.toDate().toLocaleString('el-GR') || null,
         image: doc.data().image || null,
+        description: sanitizeDescription(doc.data().description),
       }) as Talk,
   );
 

@@ -1,12 +1,8 @@
 import { Talk } from '@/types/talk';
 import Image from 'next/image';
-import DOMPurify from 'dompurify';
 import { LinkButton, LinkButtons } from './link-buttons';
 
 export default function TalkCard({ talk }: { talk: Talk }) {
-  const sanitizedDescriptionHTML =
-    typeof window !== 'undefined' ? DOMPurify.sanitize(talk.description) : talk.description;
-
   const parts = [talk.url1, talk.url2, talk.url3].filter((url): url is string => !!url);
 
   return (
@@ -31,7 +27,7 @@ export default function TalkCard({ talk }: { talk: Talk }) {
       )}
       <div
         className="prose dark:prose-invert max-w-none break-words text-[15px] leading-relaxed text-foreground/85 prose-a:text-secondary"
-        dangerouslySetInnerHTML={{ __html: sanitizedDescriptionHTML }}
+        dangerouslySetInnerHTML={{ __html: talk.description }}
       />
       {parts.length > 0 && (
         <LinkButtons>
