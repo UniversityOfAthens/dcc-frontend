@@ -1,9 +1,20 @@
+import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { PageContainer, PageHeader, SectionTitle } from '@/components/page-container';
 import { LinkButton, LinkButtons } from '@/components/link-buttons';
 import { getSerieById } from '@/server/getSerieById';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ serieId: string }>;
+}): Promise<Metadata> {
+  const serie = await getSerieById((await params).serieId);
+  if (!serie) return {};
+  return { title: serie.name, description: serie.description?.slice(0, 160) };
+}
 
 export default async function Serie({ params }: { params: Promise<{ serieId: string }> }) {
   const paramsValue = await params;

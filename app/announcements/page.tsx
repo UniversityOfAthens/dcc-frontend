@@ -1,7 +1,13 @@
+import type { Metadata } from 'next';
 import AnnouncementCard from '@/components/announcement-card';
 import PagePagination from '@/components/page-pagination';
 import { EmptyState, PageContainer, PageHeader } from '@/components/page-container';
 import { getAnnouncements } from '@/server/getAnnouncements';
+
+export const metadata: Metadata = {
+  title: 'Ανακοινώσεις',
+  description: 'Τα νέα και οι ανακοινώσεις του DIT Coding Club.',
+};
 
 export default async function Announcements({
   searchParams,

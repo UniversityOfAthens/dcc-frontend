@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
 import { PageContainer, PageHeader } from '@/components/page-container';
+
+export const metadata: Metadata = {
+  title: 'Πρόγραμμα',
+  description: 'Το πρόγραμμα των συναντήσεων του DIT Coding Club.',
+};
 
 export default function Schedule() {
   return (

@@ -16,6 +16,8 @@ import {
   CarouselPrevious,
 } from './ui/carousel';
 import { Announcement } from '@/types/announcement';
+import { Meeting } from '@/types/meeting';
+import MeetingCard from './meeting-card';
 import Section from './section';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import AnnouncementCard from './announcement-card';
@@ -69,9 +71,11 @@ function AnnouncementCarousel({ announcements }: { announcements: Announcement[]
 export default function Home({
   discordMembers,
   featuredAnnouncements,
+  recentMeetings,
 }: {
   discordMembers: number;
   featuredAnnouncements: Announcement[];
+  recentMeetings: Meeting[];
 }) {
   return (
     <div className="flex flex-col items-center pb-16">
@@ -140,6 +144,18 @@ export default function Home({
             />
           )}
         </motion.section>
+      )}
+
+      {/* Recent meetings */}
+      {recentMeetings.length > 0 && (
+        <section className="mt-20 w-full max-w-5xl px-4">
+          <h2 className="mb-7 text-center text-3xl font-bold sm:text-4xl">Πρόσφατες συναντήσεις</h2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {recentMeetings.map((meeting) => (
+              <MeetingCard key={meeting.id} meeting={meeting} showSection />
+            ))}
+          </div>
+        </section>
       )}
 
       {/* Fields */}

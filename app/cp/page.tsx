@@ -1,10 +1,14 @@
-import FieldPage from '@/components/field-page';
+import type { Metadata } from 'next';
+import FieldPage, { type FieldSearchParams } from '@/components/field-page';
+import { getField } from '@/lib/fields';
 
-export default async function Cp({ searchParams }: { searchParams: Promise<{ page: string }> }) {
-  const searchParamsValue = await searchParams;
-  const currentPage = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
+const field = getField('cp');
 
-  return (
-    <FieldPage section="cp" currentPage={currentPage} pageHref={(page) => `/cp?page=${page}`} />
-  );
+export const metadata: Metadata = {
+  title: field.title,
+  description: field.description,
+};
+
+export default async function Cp({ searchParams }: { searchParams: Promise<FieldSearchParams> }) {
+  return <FieldPage section="cp" searchParams={await searchParams} />;
 }

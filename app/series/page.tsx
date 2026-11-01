@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { EmptyState, PageContainer, PageHeader } from '@/components/page-container';
 import { getSeries } from '@/server/getSeries';
+
+export const metadata: Metadata = {
+  title: 'Σειρές',
+  description: 'Σειρές μαθημάτων του DIT Coding Club με πολλά επεισόδια.',
+};
+
+// Updated on demand by the admin app (app/api/revalidate), at least hourly.
+export const revalidate = 3600;
 
 export default async function Series() {
   const { data } = await getSeries({

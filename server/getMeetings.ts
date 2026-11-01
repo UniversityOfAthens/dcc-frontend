@@ -1,4 +1,5 @@
 import 'server-only';
+import { cached } from '@/lib/cache';
 
 import { firestore, getTotalPages } from '@/firebase/server';
 import { Meeting } from '@/types/meeting';
@@ -14,7 +15,7 @@ type GetMeetingsOptions = {
   };
 };
 
-export const getMeetings = async (options?: GetMeetingsOptions) => {
+const loadMeetings = async (options?: GetMeetingsOptions) => {
   const page = options?.pagination?.page || 1;
   const pageSize = options?.pagination?.pageSize || 10;
   const { section } = options?.filters || {};
@@ -32,14 +33,21 @@ export const getMeetings = async (options?: GetMeetingsOptions) => {
     .offset((page - 1) * pageSize)
     .get();
 
-  const meetings = meetingsSnapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-        date: doc.data().date?.toDate() || null,
-      }) as Meeting,
-  );
+  // Only plain, declared fields: results are cached as JSON and passed to client components.
+  const meetings: Meeting[] = meetingsSnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      title: data.title ?? '',
+      section: data.section,
+      date: data.date?.toDate?.().toISOString() ?? '',
+      url1: data.url1 ?? '',
+      url2: data.url2 ?? '',
+      url3: data.url3 ?? '',
+    };
+  });
 
   return { data: meetings, totalPages };
 };
+
+export const getMeetings = cached(loadMeetings, 'getMeetings', ['meetings']);

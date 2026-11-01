@@ -1,9 +1,10 @@
 import 'server-only';
+import { cached } from '@/lib/cache';
 
 import { firestore } from '@/firebase/server';
 import { HallOfFameEntry } from '@/types/hall-of-fame-entry';
 
-export const getHallOfFameEntries = async () => {
+const loadHallOfFameEntries = async () => {
   const hallOfFameCollection = firestore.collection('hallOfFameEntries').orderBy('title');
 
   const hallOfFameSnapshot = await hallOfFameCollection.get();
@@ -23,3 +24,7 @@ export const getHallOfFameEntries = async () => {
 
   return { data: entries };
 };
+
+export const getHallOfFameEntries = cached(loadHallOfFameEntries, 'getHallOfFameEntries', [
+  'hall-of-fame',
+]);
