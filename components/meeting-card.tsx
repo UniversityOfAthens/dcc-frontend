@@ -1,36 +1,20 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import Link from 'next/link';
 import { Meeting } from '@/types/meeting';
+import { LinkButton, LinkButtons } from './link-buttons';
 
 export default function MeetingCard({ meeting }: { meeting: Meeting }) {
+  const parts = [meeting.url1, meeting.url2, meeting.url3].filter((url): url is string => !!url);
+
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="flex flex-row justify-between">{meeting.title}</CardTitle>
-        <CardDescription>{meeting.date.toDateString()}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        <Button asChild variant={'outline'} size={'xl'}>
-          <Link href={meeting.url1} target="_blank">
-            Μέρος 1
-          </Link>
-        </Button>
-        {meeting.url2 && meeting.url2 !== '' && (
-          <Button asChild variant={'outline'} size={'xl'}>
-            <Link href={meeting.url2} target="_blank">
-              Μέρος 2
-            </Link>
-          </Button>
-        )}
-        {meeting.url3 && meeting.url3 !== '' && (
-          <Button asChild variant={'outline'} size={'xl'}>
-            <Link href={meeting.url3} target="_blank">
-              Μέρος 3
-            </Link>
-          </Button>
-        )}
-      </CardContent>
-    </Card>
+    <article className="flex w-full flex-col gap-3 rounded-2xl bg-card px-6 py-6 sm:px-7">
+      <p className="text-sm text-foreground/60">{meeting.date.toDateString()}</p>
+      <h3 className="text-xl font-bold leading-snug">{meeting.title}</h3>
+      <LinkButtons>
+        {parts.map((url, i) => (
+          <LinkButton key={url} href={url}>
+            Μέρος {i + 1}
+          </LinkButton>
+        ))}
+      </LinkButtons>
+    </article>
   );
 }

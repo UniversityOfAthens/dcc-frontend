@@ -120,3 +120,76 @@
     @apply bg-background text-foreground font-sans;
   }
 }
+
+/* Homepage logo flight (components/flying-logo.tsx): hide the header logo while the big one is in flight. */
+html[data-logo-flight='on'] [data-logo-slot] {
+  opacity: 0;
+}
+
+/* Slow brand-colored glow behind the homepage hero. */
+.hero-mesh {
+  position: absolute;
+  inset: -10%;
+  filter: blur(60px);
+  opacity: 0.9;
+  pointer-events: none;
+  background:
+    radial-gradient(28% 34% at 24% 32%, rgba(67, 197, 231, 0.18), transparent 70%),
+    radial-gradient(30% 30% at 78% 24%, rgba(106, 20, 128, 0.45), transparent 70%),
+    radial-gradient(34% 30% at 70% 80%, rgba(67, 197, 231, 0.1), transparent 70%),
+    radial-gradient(26% 26% at 20% 82%, rgba(48, 0, 59, 0.6), transparent 70%);
+  animation: hero-mesh 24s ease-in-out infinite alternate;
+}
+@keyframes hero-mesh {
+  50% {
+    transform: translate(2%, -2%) rotate(3deg) scale(1.05);
+  }
+  to {
+    transform: translate(-2%, 2%) rotate(-2deg) scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mesh {
+    animation: none;
+  }
+}
+
+/* Scroll hint at the bottom of the homepage hero; fades out as the logo starts to fly. */
+.scroll-cue {
+  position: absolute;
+  bottom: max(2rem, 5svh);
+  left: 50%;
+  width: 24px;
+  height: 38px;
+  margin-left: -12px;
+  border: 1.5px solid rgb(255 255 255 / 0.35);
+  border-radius: 13px;
+  opacity: calc(1 - var(--hero-p, 0) * 4);
+  pointer-events: none;
+}
+.scroll-cue::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 3px;
+  height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--secondary);
+  animation: scroll-cue 1.8s ease-in-out infinite;
+}
+@keyframes scroll-cue {
+  60% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue::after {
+    animation: none;
+  }
+}

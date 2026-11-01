@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
-export default function CountingNumbers({ from = 0, to = 100, duration = 2 }) {
+export default function CountingNumbers({ from = 0, to = 100, duration = 2, className = '' }) {
   const [count, setCount] = useState(from);
 
   useEffect(() => {
@@ -23,13 +22,5 @@ export default function CountingNumbers({ from = 0, to = 100, duration = 2 }) {
     return () => clearInterval(interval);
   }, [from, to, duration]);
 
-  return (
-    <motion.span
-      animate={{ opacity: [0, 1] }}
-      transition={{ duration: 0.5 }}
-      className="text-4xl text-secondary"
-    >
-      {count} ΜΕΛΗ
-    </motion.span>
-  );
+  return <span className={`tabular-nums ${className}`}>{count}</span>;
 }

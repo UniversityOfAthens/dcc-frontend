@@ -1,4 +1,5 @@
 'use client';
+import { ArrowRight } from 'lucide-react';
 
 import { HallOfFameEntry } from '@/types/hall-of-fame-entry';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
@@ -25,13 +26,13 @@ export default function HallOfFameCard({ entry }: { entry: HallOfFameEntry }) {
     : entry.description;
 
   return (
-    <Card className="w-full flex flex-col overflow-hidden pt-0 h-auto min-h-[60vh] md:h-[650px] flex-shrink-0">
-      <div className="relative w-full h-90 shrink-0">
+    <Card className="w-full flex flex-col gap-4 overflow-hidden rounded-2xl border-0 pt-0 pb-6 shadow-none h-full">
+      <div className="relative w-full h-72 shrink-0 bg-black/20">
         <Image
           src={entry.imageUrl}
           alt={`Image for ${entry.title}`}
           fill
-          className="object-cover"
+          className="object-contain"
         />
       </div>
 
@@ -41,12 +42,12 @@ export default function HallOfFameCard({ entry }: { entry: HallOfFameEntry }) {
             <Link
               href={entry.competitionUrl}
               target="_blank"
-              className="hover:underline text-blue-300 transition-all"
+              className="text-lg font-bold leading-snug hover:text-secondary transition-colors"
             >
               {entry.title}
             </Link>
           ) : (
-            <span>{entry.title}</span>
+            <span className="text-lg font-bold leading-snug">{entry.title}</span>
           )}
           <div className="flex flex-row justify-between items-center gap-2 w-full">
             <Badge className="max-[500px]:min-w-0 max-[500px]:shrink max-[500px]:max-w-[150px] max-[500px]:whitespace-normal max-[500px]:text-left">
@@ -57,16 +58,19 @@ export default function HallOfFameCard({ entry }: { entry: HallOfFameEntry }) {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex-1 min-h-0 overflow-hidden flex flex-col gap-2 pb-6">
-        <p className="text-sm line-clamp-4">{truncatedDescription}</p>
+      <CardContent className="flex-1 min-h-0 overflow-hidden flex flex-col gap-2">
+        <p className="text-[15px] leading-relaxed text-foreground/75 line-clamp-4">
+          {truncatedDescription}
+        </p>
         {isLong && (
           <Dialog>
             <DialogTrigger asChild>
               <button
                 type="button"
-                className="text-secondary font-medium text-sm hover:underline text-left w-fit cursor-pointer"
+                className="inline-flex items-center gap-1 text-secondary font-bold text-sm hover:underline text-left w-fit cursor-pointer"
               >
                 Περισσότερα
+                <ArrowRight className="size-4" aria-hidden="true" />
               </button>
             </DialogTrigger>
             <DialogContent className="w-[85vw] max-w-[85vw] rounded-lg border">
@@ -76,7 +80,7 @@ export default function HallOfFameCard({ entry }: { entry: HallOfFameEntry }) {
                     <Link
                       href={entry.competitionUrl}
                       target="_blank"
-                      className="hover:underline text-blue-300"
+                      className="hover:underline text-secondary"
                     >
                       {entry.title}
                     </Link>

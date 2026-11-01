@@ -14,11 +14,8 @@ export default function PagePagination({ currentPage, hrefs }: PagePaginationPro
   }
 
   return (
-    <nav
-      aria-label="Σελιδοποίηση"
-      className="w-full rounded-xl border border-secondary/20 bg-card/80 px-4 py-3 shadow-sm"
-    >
-      <p className="mb-2 border-b border-secondary/10 pb-2 text-center text-xs tracking-wide text-muted-foreground">
+    <nav aria-label="Σελιδοποίηση" className="w-full rounded-2xl bg-card px-4 py-3">
+      <p className="mb-2 border-b border-white/10 pb-2 text-center text-xs tracking-wide text-muted-foreground">
         Σελίδα <span className="font-semibold text-secondary">{currentPage}</span> από{' '}
         {hrefs.length}
       </p>
