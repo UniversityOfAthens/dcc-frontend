@@ -32,35 +32,6 @@ const steps = [
   },
 ];
 
-const ideas = [
-  {
-    field: 'Security',
-    topics: [
-      'Εισαγωγή στα CTF',
-      'Web exploitation',
-      'Reverse engineering',
-      'Κρυπτογραφία στην πράξη',
-    ],
-  },
-  {
-    field: 'Game Development',
-    topics: ['Πρώτο παιχνίδι σε Godot ή Unity', 'Shaders', 'Game jams', 'Procedural generation'],
-  },
-  {
-    field: 'Competitive Programming',
-    topics: ['Δυναμικός προγραμματισμός', 'Γράφοι', 'Προετοιμασία για ICPC', 'Segment trees'],
-  },
-  {
-    field: 'Γενικά',
-    topics: [
-      'Git και open source',
-      'Η πρώτη σου πρακτική',
-      'Linux για φοιτητές',
-      'Ένα project σου',
-    ],
-  },
-];
-
 export default function ProposeTalk() {
   return (
     <PageContainer>
@@ -111,30 +82,6 @@ export default function ProposeTalk() {
             </li>
           ))}
         </ol>
-      </section>
-
-      <section className="mt-6 flex flex-col gap-4">
-        <SectionTitle>Ιδέες για θέματα</SectionTitle>
-        <p className="text-[15px] text-foreground/65">
-          Δεν έχεις θέμα αλλά θέλεις να μιλήσεις; Διάλεξε ένα από αυτά ή πρότεινε δικό σου.
-        </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {ideas.map((group) => (
-            <div key={group.field} className="rounded-2xl bg-card px-6 py-5">
-              <h3 className="mb-3 font-bold">{group.field}</h3>
-              <ul className="flex flex-wrap gap-2">
-                {group.topics.map((topic) => (
-                  <li
-                    key={topic}
-                    className="rounded-full bg-white/5 px-3 py-1 text-sm text-foreground/80"
-                  >
-                    {topic}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
       </section>
 
       <section className="mt-10 flex flex-col items-center gap-4 rounded-2xl bg-card px-6 py-8 text-center">
