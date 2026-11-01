@@ -24,10 +24,10 @@ jobs:
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version-file: package.json
 
       - name: Install Vercel CLI
-        run: bun install --global vercel@latest
+        run: bun install --global vercel@64.1.0
 
       - name: Pull Vercel Environment Information
         # This downloads the variables you just added to Vercel
