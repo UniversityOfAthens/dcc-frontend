@@ -1,4 +1,5 @@
 import 'server-only';
+import { cached } from '@/lib/cache';
 import { sanitizeDescription } from '@/lib/sanitize';
 
 import { firestore, getTotalPages } from '@/firebase/server';
@@ -11,7 +12,7 @@ type GetTalksOptions = {
   };
 };
 
-export const getTalks = async (options?: GetTalksOptions) => {
+const loadTalks = async (options?: GetTalksOptions) => {
   const page = options?.pagination?.page || 1;
   const pageSize = options?.pagination?.pageSize || 10;
 
@@ -38,3 +39,5 @@ export const getTalks = async (options?: GetTalksOptions) => {
 
   return { data: talks, totalPages };
 };
+
+export const getTalks = cached(loadTalks, 'getTalks', ['talks']);

@@ -18,10 +18,9 @@ Next.js frontend for the DIT Coding Club. Uses Firebase (Firestore) for announce
    ```
 
 2. Create a `.env` file with:
-   - `FIREBASE_PRIVATE_KEY_ID`
    - `FIREBASE_PRIVATE_KEY`
    - `FIREBASE_CLIENT_EMAIL`
-   - `FIREBASE_CLIENT_ID`
+   - `REVALIDATE_SECRET`: shared with dcc-backend. The admin app uses it to call `POST /api/revalidate` after every change, so new content shows up without a redeploy. Content is cached and also refreshes hourly.
    - `ADMIN_EMAIL` (optional)
 
 To access the credentials, check the pinned messages in the #website channel within the Dit Coding Club server.

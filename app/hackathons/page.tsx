@@ -1,18 +1,18 @@
-import FieldPage from '@/components/field-page';
+import type { Metadata } from 'next';
+import FieldPage, { type FieldSearchParams } from '@/components/field-page';
+import { getField } from '@/lib/fields';
+
+const field = getField('hackathons');
+
+export const metadata: Metadata = {
+  title: field.title,
+  description: field.description,
+};
 
 export default async function Hackathons({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<FieldSearchParams>;
 }) {
-  const searchParamsValue = await searchParams;
-  const currentPage = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
-
-  return (
-    <FieldPage
-      section="hackathons"
-      currentPage={currentPage}
-      pageHref={(page) => `/hackathons?page=${page}`}
-    />
-  );
+  return <FieldPage section="hackathons" searchParams={await searchParams} />;
 }

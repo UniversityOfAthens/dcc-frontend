@@ -1,18 +1,18 @@
-import FieldPage from '@/components/field-page';
+import type { Metadata } from 'next';
+import FieldPage, { type FieldSearchParams } from '@/components/field-page';
+import { getField } from '@/lib/fields';
+
+const field = getField('security');
+
+export const metadata: Metadata = {
+  title: field.title,
+  description: field.description,
+};
 
 export default async function Security({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<FieldSearchParams>;
 }) {
-  const searchParamsValue = await searchParams;
-  const currentPage = searchParamsValue?.page ? parseInt(searchParamsValue.page) : 1;
-
-  return (
-    <FieldPage
-      section="security"
-      currentPage={currentPage}
-      pageHref={(page) => `/security?page=${page}`}
-    />
-  );
+  return <FieldPage section="security" searchParams={await searchParams} />;
 }

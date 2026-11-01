@@ -1,4 +1,5 @@
 import 'server-only';
+import { cached } from '@/lib/cache';
 
 import { firestore, getTotalPages } from '@/firebase/server';
 import { Serie } from '@/types/serie';
@@ -10,7 +11,7 @@ type GetSeriesOptions = {
   };
 };
 
-export const getSeries = async (options?: GetSeriesOptions) => {
+const loadSeries = async (options?: GetSeriesOptions) => {
   const page = options?.pagination?.page || 1;
   const pageSize = options?.pagination?.pageSize || 10;
 
@@ -35,3 +36,5 @@ export const getSeries = async (options?: GetSeriesOptions) => {
 
   return { data: series, totalPages };
 };
+
+export const getSeries = cached(loadSeries, 'getSeries', ['series']);

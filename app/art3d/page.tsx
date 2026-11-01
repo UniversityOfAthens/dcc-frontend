@@ -1,19 +1,18 @@
-import FieldPage from '@/components/field-page';
+import type { Metadata } from 'next';
+import FieldPage, { type FieldSearchParams } from '@/components/field-page';
+import { getField } from '@/lib/fields';
+
+const field = getField('art3d');
+
+export const metadata: Metadata = {
+  title: field.title,
+  description: field.description,
+};
 
 export default async function Art3d({
   searchParams,
 }: {
-  searchParams: Promise<{ aPage: string; mPage: string }>;
+  searchParams: Promise<FieldSearchParams>;
 }) {
-  const searchParamsValue = await searchParams;
-  const currentPage = searchParamsValue?.aPage ? parseInt(searchParamsValue.aPage) : 1;
-  const mPage = searchParamsValue?.mPage ? parseInt(searchParamsValue.mPage) : 1;
-
-  return (
-    <FieldPage
-      section="art3d"
-      currentPage={currentPage}
-      pageHref={(page) => `/art3d?aPage=${page}&mPage=${mPage}`}
-    />
-  );
+  return <FieldPage section="art3d" searchParams={await searchParams} />;
 }

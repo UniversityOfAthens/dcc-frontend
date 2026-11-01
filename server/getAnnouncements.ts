@@ -1,4 +1,5 @@
 import 'server-only';
+import { cached } from '@/lib/cache';
 import { sanitizeDescription } from '@/lib/sanitize';
 
 import { firestore, getTotalPages } from '@/firebase/server';
@@ -16,7 +17,7 @@ type GetAnnouncementsOptions = {
   };
 };
 
-export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
+const loadAnnouncements = async (options?: GetAnnouncementsOptions) => {
   const page = options?.pagination?.page || 1;
   const pageSize = options?.pagination?.pageSize || 10;
   const { section, featured } = options?.filters || {};
@@ -62,3 +63,5 @@ export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
 
   return { data: announcements, totalPages };
 };
+
+export const getAnnouncements = cached(loadAnnouncements, 'getAnnouncements', ['announcements']);

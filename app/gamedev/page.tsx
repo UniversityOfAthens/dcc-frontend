@@ -1,19 +1,18 @@
-import FieldPage from '@/components/field-page';
+import type { Metadata } from 'next';
+import FieldPage, { type FieldSearchParams } from '@/components/field-page';
+import { getField } from '@/lib/fields';
+
+const field = getField('gamedev');
+
+export const metadata: Metadata = {
+  title: field.title,
+  description: field.description,
+};
 
 export default async function GameDev({
   searchParams,
 }: {
-  searchParams: Promise<{ aPage: string; mPage: string }>;
+  searchParams: Promise<FieldSearchParams>;
 }) {
-  const searchParamsValue = await searchParams;
-  const currentPage = searchParamsValue?.aPage ? parseInt(searchParamsValue.aPage) : 1;
-  const mPage = searchParamsValue?.mPage ? parseInt(searchParamsValue.mPage) : 1;
-
-  return (
-    <FieldPage
-      section="gamedev"
-      currentPage={currentPage}
-      pageHref={(page) => `/gamedev?aPage=${page}&mPage=${mPage}`}
-    />
-  );
+  return <FieldPage section="gamedev" searchParams={await searchParams} />;
 }

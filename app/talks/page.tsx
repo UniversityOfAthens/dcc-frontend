@@ -1,9 +1,15 @@
+import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import TalkCard from '@/components/talk-card';
 import PagePagination from '@/components/page-pagination';
 import { EmptyState, PageContainer, PageHeader } from '@/components/page-container';
 import { getTalks } from '@/server/getTalks';
+
+export const metadata: Metadata = {
+  title: 'Ομιλίες',
+  description: 'Καταγραφές από τις ομιλίες του DIT Coding Club.',
+};
 
 export default async function Talks({ searchParams }: { searchParams: Promise<{ page: string }> }) {
   const searchParamsValue = await searchParams;
