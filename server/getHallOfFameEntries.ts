@@ -1,4 +1,4 @@
-'use server';
+import 'server-only';
 
 import { firestore } from '@/firebase/server';
 import { HallOfFameEntry } from '@/types/hall-of-fame-entry';

@@ -1,4 +1,4 @@
-'use server';
+import 'server-only';
 
 import { firestore, getTotalPages } from '@/firebase/server';
 import { Meeting } from '@/types/meeting';

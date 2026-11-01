@@ -1,4 +1,5 @@
-'use server';
+import 'server-only';
+import { sanitizeDescription } from '@/lib/sanitize';
 
 import { firestore, getTotalPages } from '@/firebase/server';
 import { Announcement } from '@/types/announcement';
@@ -54,6 +55,7 @@ export const getAnnouncements = async (options?: GetAnnouncementsOptions) => {
     })
     .map((item) => ({
       ...item,
+      description: sanitizeDescription(item.description as string | undefined),
       created: item.created?.toDate?.().toLocaleDateString('el-GR') || null,
       updated: item.updated?.toDate?.().toLocaleDateString('el-GR') || null,
     })) as Announcement[];

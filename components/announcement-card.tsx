@@ -1,6 +1,5 @@
 import { Announcement } from '@/types/announcement';
 import Image from 'next/image';
-import DOMPurify from 'dompurify';
 import { Badge } from './ui/badge';
 import { sectionLabelMap } from '@/lib/fields';
 
@@ -13,12 +12,6 @@ export default function AnnouncementCard({
   showSection?: boolean;
   date?: string | null;
 }) {
-  // Sanitize HTML for safe rendering
-  const sanitizedDescriptionHTML =
-    typeof window !== 'undefined'
-      ? DOMPurify.sanitize(announcement.description)
-      : announcement.description;
-
   return (
     <article className="flex w-full min-w-0 flex-col gap-3 rounded-2xl bg-card px-6 py-6 sm:px-7">
       {(showSection || date) && (
@@ -48,7 +41,7 @@ export default function AnnouncementCard({
       )}
       <div
         className="prose dark:prose-invert max-w-none break-words text-[15px] leading-relaxed text-foreground/85 prose-a:text-secondary"
-        dangerouslySetInnerHTML={{ __html: sanitizedDescriptionHTML }}
+        dangerouslySetInnerHTML={{ __html: announcement.description }}
       />
     </article>
   );
